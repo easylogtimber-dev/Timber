@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমাদের সম্পর্কে (About Us) | easylogtimber.in</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts: Inter & Noto Sans Bengali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            wood: {
+              50: '#fcf8f3',
+              100: '#f6ede3',
+              200: '#ebd7c2',
+              500: '#b67a46',
+              600: '#995b28',
+              700: '#7d451e',
+              800: '#5a2e13',
+              900: '#381c0c',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Bengali', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-stone-100 text-stone-800 dark:bg-stone-900 dark:text-stone-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- TOP HEADER / BRANDING & NAVIGATION -->
+  <header class="bg-gradient-to-r from-wood-900 via-wood-800 to-amber-950 text-white shadow-md sticky top-0 z-40 border-b border-amber-900/50">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <div class="flex items-center space-x-2.5">
+        <a href="index.html" class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 text-xl shadow-inner hover:scale-105 transition">
+          <i class="ph ph-tree"></i>
+        </a>
+        <div>
+          <div class="flex items-center gap-1.5 leading-none">
+            <a href="index.html" class="font-extrabold text-lg tracking-tight text-amber-100 hover:text-white transition">easylogtimber<span class="text-amber-400">.in</span></a>
+            <span class="bg-amber-500/30 text-amber-300 text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold">CFT Calc</span>
+          </div>
+          <p class="text-[11px] text-amber-200/80 font-medium mt-0.5">কাঠের মাপ ও সঠিক ভলিউম ক্যালকুলেটর</p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center space-x-1 font-medium text-xs text-amber-100/90">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-house text-sm"></i>
+          <span>হোম</span>
+        </a>
+        <a href="about.html" class="px-3 py-1.5 rounded-lg bg-white/15 text-white font-semibold transition flex items-center gap-1.5">
+          <i class="ph ph-info text-sm"></i>
+          <span>এবাউট আস</span>
+        </a>
+        <a href="disclaimer.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-shield-warning text-sm"></i>
+          <span>ডিসক্লেইমার</span>
+        </a>
+        <a href="contact.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-envelope-simple text-sm"></i>
+          <span>কন্টাক্ট আস</span>
+        </a>
+      </nav>
+
+      <!-- Header Controls: Theme & Mobile Toggle -->
+      <div class="flex items-center gap-2 ml-auto md:ml-0">
+        <button onclick="toggleTheme()" class="p-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-300 text-base border border-stone-700" title="Toggle Theme">
+          <i class="ph ph-sun" id="themeIcon"></i>
+        </button>
+
+        <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden p-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-200 border border-stone-700 text-lg">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden bg-wood-950/95 border-t border-amber-900/60 px-4 py-3 space-y-2 text-sm text-amber-100">
+      <a href="index.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-house text-base text-amber-400"></i> হোম
+      </a>
+      <a href="about.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg bg-white/10 font-semibold text-white transition">
+        <i class="ph ph-info text-base text-amber-400"></i> এবাউট আস
+      </a>
+      <a href="disclaimer.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-shield-warning text-base text-amber-400"></i> ডিসক্লেইমার
+      </a>
+      <a href="contact.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-envelope-simple text-base text-amber-400"></i> কন্টাক্ট আস
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full flex-1">
+    
+<div class="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-6 sm:p-8 space-y-6">
+  <div class="border-b border-stone-200 dark:border-stone-700 pb-4">
+    <div class="inline-flex items-center gap-2 text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-3 py-1 rounded-full mb-2">
+      <i class="ph ph-info"></i> পরিচিতি ও লক্ষ্য
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-white">আমাদের সম্পর্কে (About Us)</h1>
+    <p class="text-stone-500 dark:text-stone-400 text-sm mt-1">easylogtimber.in — কাঠের নিখুঁত পরিমাপ ও ভলিউম গণনার সহজ সমাধান</p>
+  </div>
+
+  <div class="space-y-4 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+    <p>
+      <strong>easylogtimber.in</strong> হলো কাঠ ব্যবসায়ী, কাঠের মিল (Saw Mill) মালিক, কাঠমিস্ত্রি এবং ক্রেতাদের জন্য বিশেষভাবে তৈরি একটি আধুনিক ও দ্রুত সিএফটি (CFT - Cubic Feet) ক্যালকুলেটর প্ল্যাটফর্ম।
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+      <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-stone-900 border border-amber-200/60 dark:border-stone-700">
+        <div class="w-8 h-8 rounded-lg bg-amber-500 text-stone-950 flex items-center justify-center font-bold mb-2">
+          <i class="ph ph-circle-dashed text-lg"></i>
+        </div>
+        <h3 class="font-bold text-stone-900 dark:text-white text-base">গোল কাঠের হিসাব (Round Log)</h3>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">
+          ঐতিহ্যবাহী ও প্রমিত হপাস (Hoppus 1/4 Girth) ফর্মুলা এবং সিলিন্ড্রিক্যাল গণনার মাধ্যমে যেকোনো গোল গুঁড়ির সঠিক আয়তন বের করা যায়।
+        </p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-emerald-50/50 dark:bg-stone-900 border border-emerald-200/60 dark:border-stone-700">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500 text-stone-950 flex items-center justify-center font-bold mb-2">
+          <i class="ph ph-cube-transparent text-lg"></i>
+        </div>
+        <h3 class="font-bold text-stone-900 dark:text-white text-base">সাইজ কাঠ / বিম (Sawn Timber)</h3>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">
+          তক্তা, চৌকাঠ, বাতা ও বিমের মাপ (L × W × T ÷ ১৪৪) অনুযায়ী মুহূর্তের মধ্যে সিএফটি ও দর নির্ধারণ করা যায়।
+        </p>
+      </div>
+    </div>
+
+    <h2 class="text-lg font-bold text-stone-900 dark:text-white pt-2">আমাদের মূল বৈশিষ্ট্যসমূহ:</h2>
+    <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+      <li>ফুট ও ইঞ্চির সমন্বিত সহজ ইনপুট ব্যবস্থা।</li>
+      <li>তাত্ক্ষণিক লাইভ প্রিভিউ ও একাধিক কাঠের রেকর্ড তালিকা তৈরি।</li>
+      <li>কার্ড ও টেবিল — দুই ধরনের ভিউ সুবিধা।</li>
+      <li>সরাসরি পেশাদার মেমো বা চালান প্রিন্ট করার ব্যবস্থা।</li>
+      <li>সম্পূর্ণ ডেটা CSV স্প্রেডশিট আকারে ডাউনলোড করার সুবিধা।</li>
+    </ul>
+
+    <div class="pt-4 border-t border-stone-200 dark:border-stone-700 flex justify-between items-center text-xs text-stone-500">
+      <span>ভার্সন: ২.৪ (২০২৬)</span>
+      <a href="index.html" class="font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+        হিসাব শুরু করুন <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-wood-950 text-stone-400 text-xs py-6 border-t border-amber-900/40 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-stone-300">
+        <i class="ph ph-tree text-amber-400 text-lg"></i>
+        <span>easylogtimber.in &copy; 2026. সর্বস্বত্ব সংরক্ষিত।</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="index.html" class="hover:text-amber-400 transition">হোম</a>
+        <a href="about.html" class="hover:text-amber-400 transition">এবাউট আস</a>
+        <a href="disclaimer.html" class="hover:text-amber-400 transition">ডিসক্লেইমার</a>
+        <a href="contact.html" class="hover:text-amber-400 transition">কন্টাক্ট আস</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('themeIcon').className = isDark ? 'ph ph-moon' : 'ph ph-sun';
+    }
+  </script>
+</body>
+</html>

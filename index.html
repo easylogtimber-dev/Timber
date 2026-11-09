@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>easylogtimber.in | Timber & Beam Volume Calculator</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts: Inter & Noto Sans Bengali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            wood: {
+              50: '#fcf8f3',
+              100: '#f6ede3',
+              200: '#ebd7c2',
+              500: '#b67a46',
+              600: '#995b28',
+              700: '#7d451e',
+              800: '#5a2e13',
+              900: '#381c0c',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Bengali', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+    }
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 10pt;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .print-break-inside-avoid {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+      th, td {
+        border: 1px solid #222 !important;
+        padding: 5px 8px !important;
+        color: #000 !important;
+      }
+      th {
+        background-color: #f3f3f3 !important;
+      }
+    }
+    .print-only {
+      display: none;
+    }
+  
+    /* Custom thin scrollbar for right side container */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #44403c;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+  </style>
+</head>
+<body class="bg-stone-100 text-stone-800 dark:bg-stone-900 dark:text-stone-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- TOP HEADER / BRANDING & NAVIGATION -->
+  <header class="bg-gradient-to-r from-wood-900 via-wood-800 to-amber-950 text-white shadow-md sticky top-0 z-40 border-b border-amber-900/50">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <div class="flex items-center space-x-2.5">
+        <a href="index.html" class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 text-xl shadow-inner hover:scale-105 transition">
+          <i class="ph ph-tree"></i>
+        </a>
+        <div>
+          <div class="flex items-center gap-1.5 leading-none">
+            <a href="index.html" class="font-extrabold text-lg tracking-tight text-amber-100 hover:text-white transition">easylogtimber<span class="text-amber-400">.in</span></a>
+            <span class="bg-amber-500/30 text-amber-300 text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold">CFT Calc</span>
+          </div>
+          <p class="text-[11px] text-amber-200/80 font-medium mt-0.5">কাঠের মাপ ও সঠিক ভলিউম ক্যালকুলেটর</p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center space-x-1 font-medium text-xs text-amber-100/90">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-white/15 text-white font-semibold transition flex items-center gap-1.5">
+          <i class="ph ph-house text-sm"></i>
+          <span>হোম</span>
+        </a>
+        <a href="about.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-info text-sm"></i>
+          <span>এবাউট আস</span>
+        </a>
+        <a href="disclaimer.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-shield-warning text-sm"></i>
+          <span>ডিসক্লেইমার</span>
+        </a>
+        <a href="contact.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 hover:text-white transition flex items-center gap-1.5">
+          <i class="ph ph-envelope-simple text-sm"></i>
+          <span>কন্টাক্ট আস</span>
+        </a>
+      </nav>
+
+      <!-- Header Controls: Price Toggle, Rate Input, Theme, Mobile Toggle -->
+      <div class="flex items-center gap-2 no-print ml-auto md:ml-0">
+        <!-- Optional Price Checkbox -->
+        <div class="bg-black/30 backdrop-blur px-2.5 py-1 rounded-lg border border-amber-500/20 flex items-center space-x-2">
+          <label class="text-xs text-amber-200 whitespace-nowrap font-medium flex items-center gap-1.5 cursor-pointer select-none">
+            <input type="checkbox" id="enablePriceToggle" onchange="togglePriceFeature()" class="rounded border-amber-400 text-amber-600 focus:ring-0 focus:ring-offset-0 w-3.5 h-3.5 cursor-pointer">
+            <span class="hidden sm:inline">দাম / রেট হিসাব</span>
+            <span class="sm:hidden">রেট</span>
+          </label>
+          <div id="headerRateWrapper" class="relative hidden items-center">
+            <span class="absolute left-2 text-stone-300 text-xs font-semibold">₹</span>
+            <input type="number" id="defaultRateInput" value="850" min="0" step="10" oninput="handleGlobalRateChange()"
+              class="w-16 sm:w-20 pl-4 sm:pl-5 pr-1 py-0.5 bg-stone-900/90 border border-amber-400/40 rounded text-amber-100 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-amber-400 text-right"
+              placeholder="Rate">
+            <span class="ml-1 text-[10px] text-stone-300">/CFT</span>
+          </div>
+        </div>
+
+        <!-- Print Action -->
+        <button onclick="window.print()" class="px-2.5 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold shadow transition-all flex items-center gap-1 active:scale-95">
+          <i class="ph ph-printer text-sm"></i>
+          <span class="hidden sm:inline">প্রিন্ট</span>
+        </button>
+
+        <!-- Dark/Light Theme -->
+        <button onclick="toggleTheme()" class="p-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-300 text-base border border-stone-700" title="Toggle Theme">
+          <i class="ph ph-sun" id="themeIcon"></i>
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden p-1.5 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-200 border border-stone-700 text-lg">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden bg-wood-950/95 border-t border-amber-900/60 px-4 py-3 space-y-2 text-sm text-amber-100">
+      <a href="index.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg bg-white/10 font-semibold text-white">
+        <i class="ph ph-house text-base text-amber-400"></i> হোম
+      </a>
+      <a href="about.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-info text-base text-amber-400"></i> এবাউট আস
+      </a>
+      <a href="disclaimer.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-shield-warning text-base text-amber-400"></i> ডিসক্লেইমার
+      </a>
+      <a href="contact.html" class="flex items-center gap-2.5 py-1.5 px-3 rounded-lg hover:bg-white/5 transition">
+        <i class="ph ph-envelope-simple text-base text-amber-400"></i> কন্টাক্ট আস
+      </a>
+    </div>
+  </header>
+
+  <!-- PRINT-ONLY HEADER FOR MEMO / INVOICE -->
+  <div class="print-only px-4 pt-4 pb-2 border-b-2 border-stone-900 mb-3">
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-xl font-black uppercase tracking-wider text-black">EASYLOGTIMBER.IN</h1>
+        <p class="text-xs font-medium text-stone-700">কাঠের পরিমাপ ও ভলিউম চালানের বিবরণী (Timber Volume Memo)</p>
+        <p class="text-[10px] text-stone-500 mt-0.5">তারিখ: <span id="printDate"></span></p>
+      </div>
+      <div class="text-right">
+        <p class="text-xs font-bold">চালান নং: <span id="printMemoNo" class="font-mono">ELT-2026</span></p>
+        <p class="text-[10px] text-stone-600">Standard Hoppus Quarter-Girth & Beam CFT</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN 2-COLUMN APP CONTAINER -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 py-4 w-full flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      
+      <!-- LEFT COLUMN: INPUT FORMS -->
+      <section class="lg:col-span-5 xl:col-span-5 no-print lg:sticky lg:top-16 space-y-3.5">
+        <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-hidden">
+          
+          <!-- Mode Tabs: Round Log vs Sawn Beam -->
+          <div class="grid grid-cols-2 p-1.5 bg-stone-100 dark:bg-stone-800/80 border-b border-stone-200 dark:border-stone-700 gap-1 text-xs sm:text-sm font-bold">
+            <button id="tabLogBtn" onclick="switchTab('log')" 
+              class="py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all bg-white dark:bg-stone-700 text-wood-700 dark:text-amber-300 shadow-sm border border-stone-200/80 dark:border-stone-600">
+              <i class="ph ph-circle-dashed text-base"></i>
+              <span>গোল কাঠ (Round Log)</span>
+            </button>
+            <button id="tabBeamBtn" onclick="switchTab('beam')" 
+              class="py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200">
+              <i class="ph ph-cube-transparent text-base"></i>
+              <span>সাইজ কাঠ / বিম (Beam)</span>
+            </button>
+          </div>
+
+          <!-- FORM 1: ROUND LOG INPUTS -->
+          <div id="moduleLog" class="p-4 sm:p-5">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-stone-100 dark:border-stone-700/60">
+              <span class="text-xs font-bold text-stone-700 dark:text-stone-200 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-600"></span> গোল কাঠের পরিমাপ ইনপুট
+              </span>
+              <!-- Formula Selector -->
+              <select id="logFormula" onchange="updateLogPreview()" class="text-[11px] bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded px-2 py-0.5 text-stone-700 dark:text-stone-300 focus:outline-none cursor-pointer">
+                <option value="hoppus" selected>Hoppus (1/4 Girth)</option>
+                <option value="cylindrical">True Cylindrical (πr²L)</option>
+              </select>
+            </div>
+
+            <form id="logForm" onsubmit="handleLogSubmit(event)" class="space-y-3">
+              <input type="hidden" id="editLogIndex" value="-1">
+
+              <!-- Length in FT and IN -->
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                  দৈর্ঘ্য / Length <span class="text-amber-600 font-bold">*</span>
+                </label>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="relative">
+                    <input type="number" id="logLengthFt" step="any" min="0" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">ft</span>
+                  </div>
+                  <div class="relative">
+                    <input type="number" id="logLengthIn" step="any" min="0" max="11.99" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">in</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Perimeter / Girth (বেড়) in FT and IN -->
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                  বেড় / পরিধি (Perimeter) <span class="text-amber-600 font-bold">*</span>
+                </label>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="relative">
+                    <input type="number" id="logPeriFt" step="any" min="0" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">ft</span>
+                  </div>
+                  <div class="relative">
+                    <input type="number" id="logPeriIn" step="any" min="0" max="11.99" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">in</span>
+                  </div>
+                </div>
+                <div class="text-[10px] text-stone-400 mt-0.5 flex justify-between">
+                  <span>উদা: 2ft 3in (বা শুধু in ঘরে মোট ইঞ্চি দিন)</span>
+                  <span id="logTotalPeriInBadge" class="font-mono text-stone-600 dark:text-stone-300 font-bold">মোট: 0"</span>
+                </div>
+              </div>
+
+              <!-- Quantity & Optional Rate -->
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">সংখ্যা (Qty)</label>
+                  <input type="number" id="logQty" value="1" min="1" step="1" required
+                    class="w-full px-3 py-1.5 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-center">
+                </div>
+                <div id="logRateWrap" class="hidden">
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">দর (₹/CFT)</label>
+                  <input type="number" id="logCustomRate" min="0" step="any" placeholder="Auto"
+                    class="w-full px-3 py-1.5 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-wood-500 focus:outline-none text-right">
+                </div>
+              </div>
+
+              <!-- Live Preview Card -->
+              <div class="p-3 bg-amber-50/80 dark:bg-stone-900/90 rounded-xl border border-amber-200/60 dark:border-stone-700 text-xs flex items-center justify-between">
+                <div>
+                  <span class="text-stone-500 text-[11px] block">মাপ: <span id="previewLogDimNotation" class="font-mono font-bold text-stone-800 dark:text-stone-200">0'-0'' x 0'-0''(0'')</span></span>
+                  <span class="text-stone-500 text-[11px]">১টি লগের সিএফটি: <strong id="previewLogSingleCft" class="text-stone-800 dark:text-stone-200 font-mono">0.000</strong></span>
+                </div>
+                <div class="text-right">
+                  <span class="text-[10px] uppercase font-bold text-stone-400 block">মোট সিএফটি</span>
+                  <span id="previewLogTotalCft" class="text-base font-extrabold text-amber-800 dark:text-amber-400 font-mono">0.000 CFT</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" onclick="resetLogForm()" class="flex-1 py-2 px-3 border border-stone-300 dark:border-stone-600 rounded-lg text-xs font-semibold hover:bg-stone-100 dark:hover:bg-stone-700 transition">
+                  রিসেট
+                </button>
+                <button type="submit" id="logSubmitBtn" class="flex-2 py-2 px-4 bg-wood-700 hover:bg-wood-800 active:scale-95 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5">
+                  <i class="ph ph-plus-circle text-base"></i>
+                  <span id="logSubmitText">লিস্টে যোগ করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- FORM 2: SAWN TIMBER / BEAM INPUTS -->
+          <div id="moduleBeam" class="p-4 sm:p-5 hidden">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-stone-100 dark:border-stone-700/60">
+              <span class="text-xs font-bold text-stone-700 dark:text-stone-200 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span> সাইজ কাঠ বা বিমের মাপ ইনপুট
+              </span>
+              <span class="text-[10px] text-stone-400 font-mono">L×W×T ÷ 144</span>
+            </div>
+
+            <form id="beamForm" onsubmit="handleBeamSubmit(event)" class="space-y-3">
+              <input type="hidden" id="editBeamIndex" value="-1">
+
+              <!-- Length in FT and IN -->
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                  দৈর্ঘ্য / Length <span class="text-emerald-600 font-bold">*</span>
+                </label>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="relative">
+                    <input type="number" id="beamLengthFt" step="any" min="0" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">ft</span>
+                  </div>
+                  <div class="relative">
+                    <input type="number" id="beamLengthIn" step="any" min="0" max="11.99" placeholder="0"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">in</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Width & Thickness (Inches) -->
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                    প্রস্থ / Width (in) <span class="text-emerald-600 font-bold">*</span>
+                  </label>
+                  <div class="relative">
+                    <input type="number" id="beamWidth" step="any" min="0.1" placeholder="e.g. 4"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">in</span>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                    পুরুত্ব / Thk (in) <span class="text-emerald-600 font-bold">*</span>
+                  </label>
+                  <div class="relative">
+                    <input type="number" id="beamThickness" step="any" min="0.1" placeholder="e.g. 3"
+                      class="w-full px-3 py-1.5 pr-7 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                    <span class="absolute right-2 top-2 text-xs text-stone-400 font-bold">in</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Qty & Optional Rate -->
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">সংখ্যা (Qty)</label>
+                  <input type="number" id="beamQty" value="1" min="1" step="1" required
+                    class="w-full px-3 py-1.5 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center">
+                </div>
+                <div id="beamRateWrap" class="hidden">
+                  <label class="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">দর (₹/CFT)</label>
+                  <input type="number" id="beamCustomRate" min="0" step="any" placeholder="Auto"
+                    class="w-full px-3 py-1.5 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none text-right">
+                </div>
+              </div>
+
+              <!-- Live Preview Card -->
+              <div class="p-3 bg-emerald-50/80 dark:bg-stone-900/90 rounded-xl border border-emerald-200/60 dark:border-stone-700 text-xs flex items-center justify-between">
+                <div>
+                  <span class="text-stone-500 text-[11px] block">মাপ: <span id="previewBeamDimNotation" class="font-mono font-bold text-stone-800 dark:text-stone-200">0'-0'' x 0'' x 0''</span></span>
+                  <span class="text-stone-500 text-[11px]">১টি বিমের সিএফটি: <strong id="previewBeamSingleCft" class="text-stone-800 dark:text-stone-200 font-mono">0.000</strong></span>
+                </div>
+                <div class="text-right">
+                  <span class="text-[10px] uppercase font-bold text-stone-400 block">মোট সিএফটি</span>
+                  <span id="previewBeamTotalCft" class="text-base font-extrabold text-emerald-800 dark:text-emerald-400 font-mono">0.000 CFT</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" onclick="resetBeamForm()" class="flex-1 py-2 px-3 border border-stone-300 dark:border-stone-600 rounded-lg text-xs font-semibold hover:bg-stone-100 dark:hover:bg-stone-700 transition">
+                  রিসেট
+                </button>
+                <button type="submit" id="beamSubmitBtn" class="flex-2 py-2 px-4 bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5">
+                  <i class="ph ph-plus-circle text-base"></i>
+                  <span id="beamSubmitText">লিস্টে যোগ করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Helpful formula explanation hint -->
+        <div class="p-3 bg-stone-200/50 dark:bg-stone-800/50 rounded-xl border border-stone-200 dark:border-stone-700 text-[11px] text-stone-500 dark:text-stone-400 space-y-1">
+          <p class="font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1">
+            <i class="ph ph-calculator"></i> সঠিক হিসাবের নিয়ম:
+          </p>
+          <p>• গোল কাঠ (Hoppus সূত্র): <span class="font-mono font-bold text-amber-800 dark:text-amber-400">(বেড়/৪)² × দৈর্ঘ্য ÷ ১৪৪</span></p>
+          <p>• সাইজ কাঠ / চৌকাঠ / বিম: <span class="font-mono font-bold text-emerald-800 dark:text-emerald-400">দৈর্ঘ্য(ফুট) × প্রস্থ(ইঞ্চি) × পুরুত্ব(ইঞ্চি) ÷ ১৪৪</span></p>
+        </div>
+      </section>
+
+            <!-- RIGHT COLUMN: OUTPUT LIST & SUMMARY -->
+      <section class="lg:col-span-7 xl:col-span-7 space-y-3">
+        
+        <!-- COMPACT SINGLE-LINE ACTION TOOLBAR -->
+        <div class="bg-white dark:bg-stone-800 rounded-xl shadow-xs border border-stone-200 dark:border-stone-700 px-3 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+          
+          <!-- Left: Count & Filter Pills -->
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 font-bold text-stone-800 dark:text-stone-200">
+              <i class="ph ph-list-numbers text-base text-wood-600 dark:text-amber-400"></i>
+              <span>লিস্ট (<span id="outputCountBadge" class="text-wood-700 dark:text-amber-400">0</span>)</span>
+            </div>
+
+            <div class="h-4 w-px bg-stone-300 dark:bg-stone-700"></div>
+
+            <!-- Filter Pills -->
+            <div class="inline-flex rounded-lg border border-stone-200 dark:border-stone-700 p-0.5 bg-stone-100 dark:bg-stone-900 text-[11px]">
+              <button onclick="setFilter('all')" id="fltAll" class="px-2 py-0.5 rounded font-bold bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs">সব</button>
+              <button onclick="setFilter('LOG')" id="fltLog" class="px-2 py-0.5 rounded text-stone-500 dark:text-stone-400 hover:text-stone-900">লগ</button>
+              <button onclick="setFilter('BEAM')" id="fltBeam" class="px-2 py-0.5 rounded text-stone-500 dark:text-stone-400 hover:text-stone-900">বিম</button>
+            </div>
+          </div>
+
+          <!-- Right: View Toggle, CSV, Print, Clear -->
+          <div class="flex items-center gap-1.5 no-print">
+            <div class="inline-flex rounded-lg border border-amber-300/60 dark:border-stone-600 p-0.5 bg-amber-50 dark:bg-stone-900 text-[11px]">
+              <button onclick="setViewMode('vertical')" id="viewBtnCards" class="px-2 py-0.5 rounded font-bold bg-wood-700 text-white shadow-xs flex items-center gap-1">
+                <i class="ph ph-rows"></i>
+                <span>কার্ড</span>
+              </button>
+              <button onclick="setViewMode('table')" id="viewBtnTable" class="px-2 py-0.5 rounded font-medium text-stone-600 dark:text-stone-400 hover:text-stone-900 flex items-center gap-1">
+                <i class="ph ph-table"></i>
+                <span>টেবিল</span>
+              </button>
+            </div>
+
+            <div class="h-4 w-px bg-stone-300 dark:bg-stone-700"></div>
+
+            <button onclick="exportToCSV()" title="Download CSV" class="p-1.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-700 dark:hover:bg-stone-600 rounded-lg text-stone-700 dark:text-stone-200 font-semibold border border-stone-300 dark:border-stone-600 flex items-center gap-1 transition">
+              <i class="ph ph-file-csv text-emerald-600 text-sm"></i>
+              <span class="hidden sm:inline text-[11px]">CSV</span>
+            </button>
+
+            <button onclick="window.print()" title="Print List" class="p-1.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-700 dark:hover:bg-stone-600 rounded-lg text-stone-700 dark:text-stone-200 font-semibold border border-stone-300 dark:border-stone-600 flex items-center gap-1 transition">
+              <i class="ph ph-printer text-sm"></i>
+              <span class="hidden sm:inline text-[11px]">প্রিন্ট</span>
+            </button>
+
+            <button onclick="promptClearAll()" title="Clear List" class="p-1.5 px-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 rounded-lg font-semibold border border-rose-200 dark:border-rose-900/60 flex items-center gap-1 transition">
+              <i class="ph ph-trash text-sm"></i>
+              <span class="hidden sm:inline text-[11px]">Clear</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- DEDICATED SCROLL CONTAINER FOR OUTPUT (ONLY THIS SCROLLS) -->
+        <div id="rightScrollContainer" class="overflow-y-auto max-h-[calc(100vh-270px)] min-h-[360px] pr-1.5 scroll-smooth custom-scrollbar">
+          
+          <!-- OUTPUT CONTAINER: VERTICAL CARDS -->
+          <div id="verticalOutputView" class="space-y-2.5">
+            <div id="emptyCardsNotice" class="py-12 px-4 text-center bg-white dark:bg-stone-800 rounded-2xl border border-dashed border-stone-300 dark:border-stone-700">
+              <i class="ph ph-tree text-4xl text-stone-300 dark:text-stone-600 mb-2 block"></i>
+              <p class="font-bold text-stone-600 dark:text-stone-300 text-sm">ডানপাশের লিস্ট বর্তমানে খালি</p>
+              <p class="text-xs text-stone-400 mt-0.5">বামপাশের ফর্মে পরিমাপ দিন ও "লিস্টে যোগ করুন" ক্লিক করুন।</p>
+            </div>
+            <div id="cardsList" class="space-y-2.5"></div>
+          </div>
+
+          <!-- OUTPUT CONTAINER: TABLE VIEW (Sticky Header) -->
+          <div id="tableOutputView" class="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-x-auto hidden">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-stone-50 dark:bg-stone-900 text-stone-600 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700 uppercase font-semibold text-[10px] tracking-wider sticky top-0 z-10 shadow-xs">
+                <tr>
+                  <th class="py-2.5 px-3 text-center w-10 bg-stone-50 dark:bg-stone-900">#</th>
+                  <th class="py-2.5 px-2.5 bg-stone-50 dark:bg-stone-900">ধরন</th>
+                  <th class="py-2.5 px-3 bg-stone-50 dark:bg-stone-900">পরিমাপ / Dimensions</th>
+                  <th class="py-2.5 px-2 text-center bg-stone-50 dark:bg-stone-900">সংখ্যা</th>
+                  <th class="py-2.5 px-2.5 text-right bg-stone-50 dark:bg-stone-900">১টি সিএফটি</th>
+                  <th class="py-2.5 px-2.5 text-right font-bold bg-stone-50 dark:bg-stone-900">মোট সিএফটি</th>
+                  <th class="py-2.5 px-2.5 text-right price-col hidden bg-stone-50 dark:bg-stone-900">দর</th>
+                  <th class="py-2.5 px-2.5 text-right price-col hidden bg-stone-50 dark:bg-stone-900">মোট টাকা</th>
+                  <th class="py-2.5 px-2 text-center w-16 no-print bg-stone-50 dark:bg-stone-900">একশন</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody" class="divide-y divide-stone-200 dark:divide-stone-700">
+                <tr id="emptyTableRow">
+                  <td colspan="7" id="emptyTableColspan" class="py-10 text-center text-stone-400">
+                    কোন কাঠের রেকর্ড এখনো যোগ করা হয়নি
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- BOTTOM GRAND TOTAL SUMMARY CARD -->
+        <div id="summaryFooterBar" class="bg-stone-900 text-white dark:bg-stone-800 rounded-xl p-3.5 shadow-sm border border-stone-800 dark:border-stone-700">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-amber-500 text-stone-950 flex items-center justify-center font-bold text-lg">
+                <i class="ph ph-sigma"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-amber-200 block">সর্বমোট কাঠের ভলিউম হিসাব</span>
+                <span class="text-[10px] text-stone-400">Total Volume & Count Summary</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 text-right">
+              <div>
+                <span class="text-[10px] uppercase text-stone-400 block font-medium">মোট সংখ্যা</span>
+                <span id="sumTotalQty" class="text-sm font-bold text-stone-100">0 টি</span>
+              </div>
+              <div class="border-l border-stone-700 pl-4">
+                <span class="text-[10px] uppercase text-amber-300 block font-bold">মোট সিএফটি</span>
+                <span id="sumTotalCft" class="text-lg sm:text-xl font-black text-amber-400 font-mono tracking-tight">0.000 CFT</span>
+              </div>
+              <div id="sumTotalPriceWrap" class="border-l border-stone-700 pl-4 price-col hidden">
+                <span class="text-[10px] uppercase text-emerald-400 block font-bold">মোট মূল্য</span>
+                <span id="sumTotalPrice" class="text-lg sm:text-xl font-black text-emerald-400 font-mono tracking-tight">₹ 0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- PRINTABLE INVOICE FOOTER -->
+    <div class="print-only mt-8 pt-4 border-t border-stone-300 text-xs">
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="font-bold">শর্তাবলী:</p>
+          <p class="text-[10px] text-stone-600">১. গোল কাঠ কোয়ার্টার-গার্থ (Hoppus) মাপে হিসাবকৃত।</p>
+          <p class="text-[10px] text-stone-600">২. সাইজ কাঠ দৈর্ঘ্য (ফুট) × প্রস্থ (ইঞ্চি) × পুরুত্ব (ইঞ্চি) ÷ ১৪৪ মাপে হিসাবকৃত।</p>
+        </div>
+        <div class="text-center">
+          <div class="w-40 border-b border-black mb-1"></div>
+          <p class="font-semibold text-[11px]">ক্রেতা / বিক্রেতার স্বাক্ষর</p>
+          <p class="text-[9px] text-stone-500">easylogtimber.in</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-wood-950 text-stone-400 text-xs py-6 border-t border-amber-900/40 no-print mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-stone-300">
+        <i class="ph ph-tree text-amber-400 text-lg"></i>
+        <span>easylogtimber.in &copy; 2026. সর্বস্বত্ব সংরক্ষিত।</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="index.html" class="hover:text-amber-400 transition">হোম</a>
+        <a href="about.html" class="hover:text-amber-400 transition">এবাউট আস</a>
+        <a href="disclaimer.html" class="hover:text-amber-400 transition">ডিসক্লেইমার</a>
+        <a href="contact.html" class="hover:text-amber-400 transition">কন্টাক্ট আস</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CUSTOM CONFIRMATION MODAL -->
+  <div id="confirmModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-stone-800 rounded-2xl max-w-xs w-full p-5 shadow-2xl border border-stone-200 dark:border-stone-700 text-center">
+      <div class="w-11 h-11 rounded-full mx-auto mb-2 flex items-center justify-center text-2xl bg-rose-100 text-rose-600">
+        <i class="ph ph-warning"></i>
+      </div>
+      <h3 id="modalTitle" class="text-sm font-bold text-stone-900 dark:text-white mb-1">সব মুছে ফেলবেন?</h3>
+      <p id="modalMsg" class="text-xs text-stone-500 dark:text-stone-300 mb-4">লিস্টের সমস্ত এন্ট্রি ও মোট হিসাব মুছে যাবে।</p>
+      
+      <div class="flex items-center justify-center gap-2">
+        <button onclick="closeModal()" class="flex-1 py-1.5 px-3 border border-stone-300 dark:border-stone-600 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100">
+          বাতিল
+        </button>
+        <button id="modalConfirmBtn" class="flex-1 py-1.5 px-3 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold shadow">
+          মুছুন
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-4 right-4 z-50 bg-stone-900 text-white dark:bg-amber-100 dark:text-stone-900 px-3.5 py-2 rounded-xl shadow-lg border border-stone-700 text-xs font-medium flex items-center gap-2 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+    <i class="ph ph-check-circle text-emerald-400 text-sm" id="toastIcon"></i>
+    <span id="toastMessage">সফলভাবে সম্পন্ন হয়েছে</span>
+  </div>
+
+  <script>
+    let entries = [];
+    let currentFilter = 'all';
+    let currentView = 'vertical';
+    let isPriceEnabled = false;
+    let modalCallback = null;
+
+    const round3 = (n) => Math.round((Number(n) + Number.EPSILON) * 1000) / 1000;
+    const roundCur = (n) => Math.round((Number(n) + Number.EPSILON) * 100) / 100;
+
+    function formatLogNotation(lFt, lIn, pFt, pIn) {
+      const lengthFt = Number(lFt || 0);
+      const lengthIn = Number(lIn || 0);
+      const periFt = Number(pFt || 0);
+      const periIn = Number(pIn || 0);
+      const totalPeriInches = (periFt * 12) + periIn;
+      return `${lengthFt}'-${lengthIn}'' x ${periFt}'-${periIn}''(${totalPeriInches}'')`;
+    }
+
+    function formatBeamNotation(lFt, lIn, width, thk) {
+      const lengthFt = Number(lFt || 0);
+      const lengthIn = Number(lIn || 0);
+      const w = Number(width || 0);
+      const t = Number(thk || 0);
+      return `${lengthFt}'-${lengthIn}'' x ${w}'' x ${t}''`;
+    }
+
+    function computeLogVolume(lFt, lIn, pFt, pIn, formulaType) {
+      const totalLenFeet = Number(lFt || 0) + (Number(lIn || 0) / 12);
+      const totalPeriIn = (Number(pFt || 0) * 12) + Number(pIn || 0);
+      if (totalLenFeet <= 0 || totalPeriIn <= 0) return { cft: 0, totalPeriIn };
+
+      let cft = 0;
+      if (formulaType === 'cylindrical') {
+        cft = (totalPeriIn * totalPeriIn * totalLenFeet) / (4 * Math.PI * 144);
+      } else {
+        const quarter = totalPeriIn / 4;
+        cft = (quarter * quarter * totalLenFeet) / 144;
+      }
+      return { cft: round3(cft), totalPeriIn };
+    }
+
+    function computeBeamVolume(lFt, lIn, width, thk) {
+      const totalLenFeet = Number(lFt || 0) + (Number(lIn || 0) / 12);
+      const w = Number(width || 0);
+      const t = Number(thk || 0);
+      if (totalLenFeet <= 0 || w <= 0 || t <= 0) return 0;
+      return round3((totalLenFeet * w * t) / 144);
+    }
+
+    function switchTab(tab) {
+      const tabLog = document.getElementById('tabLogBtn');
+      const tabBeam = document.getElementById('tabBeamBtn');
+      const modLog = document.getElementById('moduleLog');
+      const modBeam = document.getElementById('moduleBeam');
+
+      if (tab === 'log') {
+        tabLog.className = "py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all bg-white dark:bg-stone-700 text-wood-700 dark:text-amber-300 shadow-sm border border-stone-200/80 dark:border-stone-600";
+        tabBeam.className = "py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200";
+        modLog.classList.remove('hidden');
+        modBeam.classList.add('hidden');
+      } else {
+        tabBeam.className = "py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all bg-white dark:bg-stone-700 text-emerald-700 dark:text-emerald-300 shadow-sm border border-stone-200/80 dark:border-stone-600";
+        tabLog.className = "py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200";
+        modBeam.classList.remove('hidden');
+        modLog.classList.add('hidden');
+      }
+    }
+
+    function setViewMode(mode) {
+      currentView = mode;
+      const btnCards = document.getElementById('viewBtnCards');
+      const btnTable = document.getElementById('viewBtnTable');
+      const vCards = document.getElementById('verticalOutputView');
+      const vTable = document.getElementById('tableOutputView');
+
+      if (mode === 'vertical') {
+        btnCards.className = "px-2 py-0.5 rounded font-bold bg-wood-700 text-white shadow-xs flex items-center gap-1";
+        btnTable.className = "px-2 py-0.5 rounded font-medium text-stone-600 dark:text-stone-400 hover:text-stone-900 flex items-center gap-1";
+        vCards.classList.remove('hidden');
+        vTable.classList.add('hidden');
+      } else {
+        btnTable.className = "px-2 py-0.5 rounded font-bold bg-wood-700 text-white shadow-xs flex items-center gap-1";
+        btnCards.className = "px-2 py-0.5 rounded font-medium text-stone-600 dark:text-stone-400 hover:text-stone-900 flex items-center gap-1";
+        vTable.classList.remove('hidden');
+        vCards.classList.add('hidden');
+      }
+      renderOutput();
+    }
+
+    function setFilter(flt) {
+      currentFilter = flt;
+      ['fltAll', 'fltLog', 'fltBeam'].forEach(id => {
+        document.getElementById(id).className = "px-2 py-0.5 rounded text-stone-500 dark:text-stone-400 hover:text-stone-900";
+      });
+
+      if (flt === 'all') document.getElementById('fltAll').className = "px-2 py-0.5 rounded font-bold bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs";
+      if (flt === 'LOG') document.getElementById('fltLog').className = "px-2 py-0.5 rounded font-bold bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs";
+      if (flt === 'BEAM') document.getElementById('fltBeam').className = "px-2 py-0.5 rounded font-bold bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs";
+
+      renderOutput();
+    }
+
+    function togglePriceFeature() {
+      isPriceEnabled = document.getElementById('enablePriceToggle').checked;
+      const headerRate = document.getElementById('headerRateWrapper');
+      const logRateWrap = document.getElementById('logRateWrap');
+      const beamRateWrap = document.getElementById('beamRateWrap');
+      const priceCols = document.querySelectorAll('.price-col');
+      const sumTotalPriceWrap = document.getElementById('sumTotalPriceWrap');
+      const emptyColspan = document.getElementById('emptyTableColspan');
+
+      if (isPriceEnabled) {
+        headerRate.classList.remove('hidden');
+        headerRate.classList.add('flex');
+        logRateWrap.classList.remove('hidden');
+        beamRateWrap.classList.remove('hidden');
+        sumTotalPriceWrap.classList.remove('hidden');
+        priceCols.forEach(el => el.classList.remove('hidden'));
+        if (emptyColspan) emptyColspan.colSpan = 9;
+      } else {
+        headerRate.classList.add('hidden');
+        headerRate.classList.remove('flex');
+        logRateWrap.classList.add('hidden');
+        beamRateWrap.classList.add('hidden');
+        sumTotalPriceWrap.classList.add('hidden');
+        priceCols.forEach(el => el.classList.add('hidden'));
+        if (emptyColspan) emptyColspan.colSpan = 7;
+      }
+      renderOutput();
+    }
+
+    function handleGlobalRateChange() {
+      if (!isPriceEnabled) return;
+      const rate = parseFloat(document.getElementById('defaultRateInput').value) || 0;
+      entries.forEach(item => {
+        if (!item.hasCustomRate) {
+          item.rate = rate;
+          item.totalPrice = roundCur(item.totalCft * rate);
+        }
+      });
+      renderOutput();
+    }
+
+    function updateLogPreview() {
+      const lFt = document.getElementById('logLengthFt').value;
+      const lIn = document.getElementById('logLengthIn').value;
+      const pFt = document.getElementById('logPeriFt').value;
+      const pIn = document.getElementById('logPeriIn').value;
+      const qty = parseInt(document.getElementById('logQty').value) || 1;
+      const formula = document.getElementById('logFormula').value;
+
+      const { cft, totalPeriIn } = computeLogVolume(lFt, lIn, pFt, pIn, formula);
+      document.getElementById('logTotalPeriInBadge').textContent = `মোট: ${totalPeriIn}"`;
+      document.getElementById('previewLogDimNotation').textContent = formatLogNotation(lFt, lIn, pFt, pIn);
+      document.getElementById('previewLogSingleCft').textContent = cft.toFixed(3);
+      document.getElementById('previewLogTotalCft').textContent = (cft * qty).toFixed(3) + ' CFT';
+    }
+
+    function updateBeamPreview() {
+      const lFt = document.getElementById('beamLengthFt').value;
+      const lIn = document.getElementById('beamLengthIn').value;
+      const width = document.getElementById('beamWidth').value;
+      const thk = document.getElementById('beamThickness').value;
+      const qty = parseInt(document.getElementById('beamQty').value) || 1;
+
+      const singleCft = computeBeamVolume(lFt, lIn, width, thk);
+      document.getElementById('previewBeamDimNotation').textContent = formatBeamNotation(lFt, lIn, width, thk);
+      document.getElementById('previewBeamSingleCft').textContent = singleCft.toFixed(3);
+      document.getElementById('previewBeamTotalCft').textContent = (singleCft * qty).toFixed(3) + ' CFT';
+    }
+
+    function handleLogSubmit(e) {
+      e.preventDefault();
+      const lFt = parseFloat(document.getElementById('logLengthFt').value) || 0;
+      const lIn = parseFloat(document.getElementById('logLengthIn').value) || 0;
+      const pFt = parseFloat(document.getElementById('logPeriFt').value) || 0;
+      const pIn = parseFloat(document.getElementById('logPeriIn').value) || 0;
+      const qty = parseInt(document.getElementById('logQty').value) || 1;
+      const formula = document.getElementById('logFormula').value;
+      const defaultRate = parseFloat(document.getElementById('defaultRateInput').value) || 0;
+      const customRateVal = document.getElementById('logCustomRate').value;
+      const hasCustom = customRateVal !== '';
+      const rate = hasCustom ? parseFloat(customRateVal) : defaultRate;
+
+      if (lFt === 0 && lIn === 0) {
+        showToast('সঠিক দৈর্ঘ্য (ফুট বা ইঞ্চি) লিখুন', 'error');
+        return;
+      }
+      if (pFt === 0 && pIn === 0) {
+        showToast('বেড় বা পরিধি প্রদান করুন', 'error');
+        return;
+      }
+
+      const { cft: singleCft, totalPeriIn } = computeLogVolume(lFt, lIn, pFt, pIn, formula);
+      const totalCft = round3(singleCft * qty);
+      const totalPrice = isPriceEnabled ? roundCur(totalCft * rate) : 0;
+      const notation = formatLogNotation(lFt, lIn, pFt, pIn);
+
+      const entry = {
+        type: 'LOG',
+        lFt, lIn, pFt, pIn,
+        totalPeriIn,
+        formula,
+        qty,
+        singleCft,
+        totalCft,
+        rate: isPriceEnabled ? rate : 0,
+        hasCustomRate: hasCustom,
+        totalPrice,
+        notation
+      };
+
+      const editIdx = parseInt(document.getElementById('editLogIndex').value);
+      const isNew = editIdx === -1;
+      if (!isNew) {
+        entries[editIdx] = entry;
+        showToast('লগের তথ্য আপডেট করা হয়েছে');
+        resetLogForm();
+      } else {
+        entries.push(entry);
+        showToast('নতুন গোল কাঠ তালিকায় যোগ হয়েছে');
+        resetLogForm(true);
+      }
+      renderOutput();
+      if (isNew) {
+        scrollToLatestItem();
+      }
+    }
+
+    function handleBeamSubmit(e) {
+      e.preventDefault();
+      const lFt = parseFloat(document.getElementById('beamLengthFt').value) || 0;
+      const lIn = parseFloat(document.getElementById('beamLengthIn').value) || 0;
+      const width = parseFloat(document.getElementById('beamWidth').value) || 0;
+      const thk = parseFloat(document.getElementById('beamThickness').value) || 0;
+      const qty = parseInt(document.getElementById('beamQty').value) || 1;
+      const defaultRate = parseFloat(document.getElementById('defaultRateInput').value) || 0;
+      const customRateVal = document.getElementById('beamCustomRate').value;
+      const hasCustom = customRateVal !== '';
+      const rate = hasCustom ? parseFloat(customRateVal) : defaultRate;
+
+      if (lFt === 0 && lIn === 0) {
+        showToast('সঠিক দৈর্ঘ্য প্রদান করুন', 'error');
+        return;
+      }
+      if (width <= 0 || thk <= 0) {
+        showToast('প্রস্থ ও পুরুত্ব দিন', 'error');
+        return;
+      }
+
+      const singleCft = computeBeamVolume(lFt, lIn, width, thk);
+      const totalCft = round3(singleCft * qty);
+      const totalPrice = isPriceEnabled ? roundCur(totalCft * rate) : 0;
+      const notation = formatBeamNotation(lFt, lIn, width, thk);
+
+      const entry = {
+        type: 'BEAM',
+        lFt, lIn, width, thk,
+        qty,
+        singleCft,
+        totalCft,
+        rate: isPriceEnabled ? rate : 0,
+        hasCustomRate: hasCustom,
+        totalPrice,
+        notation
+      };
+
+      const editIdx = parseInt(document.getElementById('editBeamIndex').value);
+      const isNew = editIdx === -1;
+      if (!isNew) {
+        entries[editIdx] = entry;
+        showToast('বিমের তথ্য আপডেট করা হয়েছে');
+        resetBeamForm();
+      } else {
+        entries.push(entry);
+        showToast('নতুন বিম তালিকায় যোগ হয়েছে');
+        resetBeamForm(true);
+      }
+      renderOutput();
+      if (isNew) {
+        scrollToLatestItem();
+      }
+    }
+
+    function editItem(index) {
+      const item = entries[index];
+      if (!item) return;
+
+      if (item.type === 'LOG') {
+        switchTab('log');
+        document.getElementById('editLogIndex').value = index;
+        document.getElementById('logLengthFt').value = item.lFt;
+        document.getElementById('logLengthIn').value = item.lIn || '';
+        document.getElementById('logPeriFt').value = item.pFt || '';
+        document.getElementById('logPeriIn').value = item.pIn || '';
+        document.getElementById('logQty').value = item.qty;
+        document.getElementById('logFormula').value = item.formula || 'hoppus';
+        document.getElementById('logCustomRate').value = item.hasCustomRate ? item.rate : '';
+        document.getElementById('logSubmitText').textContent = 'আপডেট করুন (Update)';
+        updateLogPreview();
+      } else {
+        switchTab('beam');
+        document.getElementById('editBeamIndex').value = index;
+        document.getElementById('beamLengthFt').value = item.lFt;
+        document.getElementById('beamLengthIn').value = item.lIn || '';
+        document.getElementById('beamWidth').value = item.width;
+        document.getElementById('beamThickness').value = item.thk;
+        document.getElementById('beamQty').value = item.qty;
+        document.getElementById('beamCustomRate').value = item.hasCustomRate ? item.rate : '';
+        document.getElementById('beamSubmitText').textContent = 'আপডেট করুন (Update)';
+        updateBeamPreview();
+      }
+      showToast('এন্ট্রিটি এডিটের জন্য প্রস্তুত');
+    }
+
+    function deleteItem(index) {
+      entries.splice(index, 1);
+      renderOutput();
+      showToast('আইটেম মুছে ফেলা হয়েছে');
+    }
+
+    function resetLogForm(keepFocus = false) {
+      document.getElementById('editLogIndex').value = '-1';
+      document.getElementById('logSubmitText').textContent = 'লিস্টে যোগ করুন';
+      document.getElementById('logLengthFt').value = '';
+      document.getElementById('logLengthIn').value = '';
+      document.getElementById('logPeriFt').value = '';
+      document.getElementById('logPeriIn').value = '';
+      document.getElementById('logQty').value = '1';
+      document.getElementById('logCustomRate').value = '';
+      updateLogPreview();
+      if (keepFocus) document.getElementById('logLengthFt').focus();
+    }
+
+    function resetBeamForm(keepFocus = false) {
+      document.getElementById('editBeamIndex').value = '-1';
+      document.getElementById('beamSubmitText').textContent = 'লিস্টে যোগ করুন';
+      document.getElementById('beamLengthFt').value = '';
+      document.getElementById('beamLengthIn').value = '';
+      document.getElementById('beamWidth').value = '';
+      document.getElementById('beamThickness').value = '';
+      document.getElementById('beamQty').value = '1';
+      document.getElementById('beamCustomRate').value = '';
+      updateBeamPreview();
+      if (keepFocus) document.getElementById('beamLengthFt').focus();
+    }
+
+    function renderOutput() {
+      const cardsList = document.getElementById('cardsList');
+      const emptyCards = document.getElementById('emptyCardsNotice');
+      const tableBody = document.getElementById('tableBody');
+      const countBadge = document.getElementById('outputCountBadge');
+
+      countBadge.textContent = entries.length;
+
+      const filtered = entries
+        .map((item, originalIndex) => ({ ...item, originalIndex }))
+        .filter(item => currentFilter === 'all' || item.type === currentFilter);
+
+      let totQty = 0;
+      let totCft = 0;
+      let totPrice = 0;
+
+      entries.forEach(item => {
+        totQty += item.qty;
+        totCft += item.totalCft;
+        totPrice += item.totalPrice;
+      });
+
+      document.getElementById('sumTotalQty').textContent = `${totQty} টি`;
+      document.getElementById('sumTotalCft').textContent = `${round3(totCft).toFixed(3)} CFT`;
+      document.getElementById('sumTotalPrice').textContent = `₹ ${totPrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+
+      if (entries.length === 0) {
+        if (emptyCards) emptyCards.classList.remove('hidden');
+        if (cardsList) cardsList.innerHTML = '';
+        if (tableBody) {
+          const colSpanCount = isPriceEnabled ? 9 : 7;
+          tableBody.innerHTML = `
+            <tr id="emptyTableRow">
+              <td colspan="${colSpanCount}" id="emptyTableColspan" class="py-10 text-center text-stone-400">
+                কোন কাঠের রেকর্ড এখনো যোগ করা হয়নি
+              </td>
+            </tr>
+          `;
+        }
+        return;
+      }
+
+      if (emptyCards) emptyCards.classList.add('hidden');
+      if (cardsList) cardsList.innerHTML = '';
+      if (tableBody) tableBody.innerHTML = '';
+
+      filtered.forEach((item, idx) => {
+        const isLog = item.type === 'LOG';
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border bg-white dark:bg-stone-800 transition-all ${
+          isLog 
+            ? 'border-amber-200 dark:border-amber-900/60 shadow-xs hover:border-amber-400' 
+            : 'border-emerald-200 dark:border-emerald-900/60 shadow-xs hover:border-emerald-400'
+        }`;
+
+        const typeBadge = isLog
+          ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">গোল কাঠ</span>`
+          : `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">বিম</span>`;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-stone-100 dark:border-stone-700 text-xs">
+            <div class="flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded bg-stone-900 text-white dark:bg-stone-700 text-[10px] font-mono font-bold flex items-center justify-center">#${idx + 1}</span>
+              ${typeBadge}
+              <span class="font-mono font-bold text-stone-900 dark:text-stone-100 ml-1 text-xs sm:text-sm">${item.notation}</span>
+            </div>
+            <div class="flex items-center gap-1.5 no-print">
+              <span class="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-700 text-stone-800 dark:text-stone-200 font-bold text-xs">${item.qty} টি</span>
+              <button onclick="editItem(${item.originalIndex})" title="Edit" class="p-1 hover:text-amber-600 dark:hover:text-amber-400 text-stone-400 transition">
+                <i class="ph ph-pencil-simple text-sm"></i>
+              </button>
+              <button onclick="deleteItem(${item.originalIndex})" title="Delete" class="p-1 hover:text-rose-600 dark:hover:text-rose-400 text-stone-400 transition">
+                <i class="ph ph-trash text-sm"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div class="bg-stone-50 dark:bg-stone-900/80 p-1.5 px-2 rounded-lg">
+              <span class="text-[10px] text-stone-400 block">১টি সিএফটি</span>
+              <span class="font-mono font-bold text-stone-700 dark:text-stone-300">${item.singleCft.toFixed(3)}</span>
+            </div>
+            <div class="bg-amber-50 dark:bg-amber-950/30 p-1.5 px-2 rounded-lg">
+              <span class="text-[10px] text-amber-700 dark:text-amber-400 block font-semibold">মোট সিএফটি</span>
+              <span class="font-mono font-black text-amber-900 dark:text-amber-300 text-sm">${item.totalCft.toFixed(3)} CFT</span>
+            </div>
+            ${isPriceEnabled ? `
+              <div class="bg-stone-50 dark:bg-stone-900/80 p-1.5 px-2 rounded-lg">
+                <span class="text-[10px] text-stone-400 block">দর (Rate)</span>
+                <span class="font-mono font-bold text-stone-700 dark:text-stone-300">₹${item.rate}</span>
+              </div>
+              <div class="bg-emerald-50 dark:bg-emerald-950/30 p-1.5 px-2 rounded-lg">
+                <span class="text-[10px] text-emerald-700 dark:text-emerald-400 block font-semibold">মোট টাকা</span>
+                <span class="font-mono font-black text-emerald-900 dark:text-emerald-300 text-sm">₹${item.totalPrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+              </div>
+            ` : ''}
+          </div>
+        `;
+        cardsList.appendChild(card);
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-amber-50/50 dark:hover:bg-stone-700/30 transition-colors text-xs";
+
+        const priceCells = isPriceEnabled ? `
+          <td class="py-2.5 px-2.5 text-right font-mono text-stone-500 price-col">₹${item.rate}</td>
+          <td class="py-2.5 px-2.5 text-right font-mono font-bold text-emerald-700 dark:text-emerald-400 price-col">
+            ₹${item.totalPrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+          </td>
+        ` : '';
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 text-center font-mono text-stone-400">${idx + 1}</td>
+          <td class="py-2.5 px-2.5">${typeBadge}</td>
+          <td class="py-2.5 px-3 font-mono font-bold text-stone-800 dark:text-stone-100">${item.notation}</td>
+          <td class="py-2.5 px-2 text-center font-bold">${item.qty}</td>
+          <td class="py-2.5 px-2.5 text-right font-mono">${item.singleCft.toFixed(3)}</td>
+          <td class="py-2.5 px-2.5 text-right font-mono font-bold text-amber-800 dark:text-amber-400">${item.totalCft.toFixed(3)}</td>
+          ${priceCells}
+          <td class="py-2.5 px-2 text-center no-print">
+            <div class="inline-flex items-center gap-1">
+              <button onclick="editItem(${item.originalIndex})" title="Edit" class="p-1 hover:text-amber-600 dark:hover:text-amber-400 text-stone-400">
+                <i class="ph ph-pencil-simple text-sm"></i>
+              </button>
+              <button onclick="deleteItem(${item.originalIndex})" title="Delete" class="p-1 hover:text-rose-600 dark:hover:text-rose-400 text-stone-400">
+                <i class="ph ph-trash text-sm"></i>
+              </button>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function exportToCSV() {
+      if (entries.length === 0) {
+        showToast('লিস্টে কোনো ডেটা নেই', 'error');
+        return;
+      }
+
+      const headers = isPriceEnabled
+        ? ["SL", "Type", "Dimension Notation", "Qty", "Single CFT", "Total CFT", "Rate (Rs)", "Amount (Rs)"]
+        : ["SL", "Type", "Dimension Notation", "Qty", "Single CFT", "Total CFT"];
+
+      const rows = entries.map((item, i) => {
+        const row = [
+          i + 1,
+          item.type === 'LOG' ? 'Round Log' : 'Beam',
+          `"${item.notation}"`,
+          item.qty,
+          item.singleCft.toFixed(3),
+          item.totalCft.toFixed(3)
+        ];
+        if (isPriceEnabled) {
+          row.push(item.rate, item.totalPrice.toFixed(2));
+        }
+        return row;
+      });
+
+      const csvData = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const link = document.createElement('a');
+      link.href = encodeURI(csvData);
+      link.download = `easylogtimber_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV ফাইল ডাউনলোড হয়েছে');
+    }
+
+    function promptClearAll() {
+      if (entries.length === 0) {
+        showToast('লিস্ট ইতিমধ্যে খালি', 'error');
+        return;
+      }
+      modalCallback = () => {
+        entries = [];
+        resetLogForm();
+        resetBeamForm();
+        renderOutput();
+        showToast('লিস্টের সব এন্ট্রি মুছে ফেলা হয়েছে');
+      };
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('confirmModal').classList.add('hidden');
+      modalCallback = null;
+    }
+
+    document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+      if (modalCallback) modalCallback();
+      closeModal();
+    });
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('themeIcon').className = isDark ? 'ph ph-moon' : 'ph ph-sun';
+    }
+
+    let toastTimer;
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      clearTimeout(toastTimer);
+      toastMsg.textContent = msg;
+
+      if (type === 'error') {
+        toastIcon.className = 'ph ph-x-circle text-rose-400 text-base';
+      } else {
+        toastIcon.className = 'ph ph-check-circle text-emerald-400 text-base';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2800);
+    }
+
+    function scrollToLatestItem() {
+      setTimeout(() => {
+        const container = document.getElementById('rightScrollContainer');
+        if (container) {
+          // Scroll ONLY the right container down to the bottom without moving the page or left form!
+          container.scrollTo({
+            top: container.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+
+        // Add subtle highlight flash to newly added item
+        if (currentView === 'vertical') {
+          const cardsList = document.getElementById('cardsList');
+          if (cardsList && cardsList.lastElementChild) {
+            cardsList.lastElementChild.classList.add('ring-2', 'ring-amber-400');
+            setTimeout(() => cardsList.lastElementChild.classList.remove('ring-2', 'ring-amber-400'), 1400);
+          }
+        } else {
+          const tableBody = document.getElementById('tableBody');
+          if (tableBody && tableBody.lastElementChild) {
+            tableBody.lastElementChild.classList.add('bg-amber-100', 'dark:bg-amber-950/60');
+            setTimeout(() => tableBody.lastElementChild.classList.remove('bg-amber-100', 'dark:bg-amber-950/60'), 1400);
+          }
+        }
+      }, 50);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      document.getElementById('printDate').textContent = now.toLocaleDateString('bn-IN', {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      document.getElementById('printMemoNo').textContent = 'ELT-' + Math.floor(1000 + Math.random() * 9000);
+
+      ['logLengthFt', 'logLengthIn', 'logPeriFt', 'logPeriIn', 'logQty'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateLogPreview);
+      });
+
+      ['beamLengthFt', 'beamLengthIn', 'beamWidth', 'beamThickness', 'beamQty'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateBeamPreview);
+      });
+
+      document.getElementById('enablePriceToggle').checked = false;
+      togglePriceFeature();
+      updateLogPreview();
+      updateBeamPreview();
+    });
+  </script>
+</body>
+</html>
